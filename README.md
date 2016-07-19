@@ -20,9 +20,13 @@ All original code (not including libraries) and documentation provided under the
 
 # Setup
 
-After cloning the repo, you'll need to get the Node server up and running. Do so by running `npm install`. This will set up the node static file server.
+After cloning the repo, you'll need to get the Node server up and running.
 
-In a browser, to to URL: `localhost:5000`
+In a terminal:
+
+1. Run `npm install`
+2. Start the server: `npm start`
+3. In a browser, go to URL: `localhost:5000`
 
 # The Code
 

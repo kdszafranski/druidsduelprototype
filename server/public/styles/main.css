@@ -7,15 +7,6 @@ body {
     background: black url(../images/game-screen-bg.jpg) top left;
 }
 
-@font-face {
-    font-family: 'Frances';
-    src: 
-        local('Frances Uncial Std'), 
-        local('FrancesUncialStd-Regular'),
-        local('FrancesUncialStd'),
-        url(FrancesUncialStd.otf) format('opentype');
-}
-
 #game {
     position: relative;
     margin: 30px auto;
@@ -47,7 +38,7 @@ body {
 /*    height: 100%;*/
     display: none;
     z-index: 10;
-    font-family: Calibri, sans-serif;    
+    font-family: Calibri, sans-serif;
 }
 
 #game .screen.active {
@@ -79,7 +70,7 @@ body {
 #splash-screen .continue {
     cursor: pointer;
     font-size: 0.75em;
-    font-family: Frances, serif;
+    font-family: serif;
     display: none;
 }
 
@@ -140,7 +131,7 @@ body {
 }
 
 #game-screen .game-board label.tile-occupant-moves span {
-    font-family: Frances, serif;
+    font-family: serif;
     font-size: 0.8em;
     color: black;
 }
@@ -148,7 +139,7 @@ body {
 #game-screen .game-board label.help-text {
     position: absolute;
     z-index: 25;
-    font-family: Frances, serif;
+    font-family: serif;
     font-size: 0.5em;
     top: 566px;
     left: 144px;
@@ -164,7 +155,7 @@ body {
     height: 33px;
     margin: 0 0 20px 22px;
     padding: 0;
-    font-family: Frances, serif;
+    font-family: serif;
     font-size: 20px;
 }
 
@@ -502,7 +493,7 @@ body {
 
 #mana-jar .player-mana span {
     color: #000;
-    font-family: Frances, serif;
+    font-family: serif;
     width: 96px;
     font-size: 1em;
     z-index: 25;
@@ -525,7 +516,7 @@ body {
 }
 
 #game-screen h2 {
-    font-family: Frances, serif;
+    font-family: serif;
     font-size: 0.8em;
     margin: 24px 0 -4px 110px;
     font-weight: bold;
@@ -534,7 +525,7 @@ body {
 }
 
 #game-screen h3, #game-status h3, #game-over h3 {
-    font-family: Frances, serif;
+    font-family: serif;
     font-size: 0.7em;
     margin: 2px 0;
     font-weight: bold;
@@ -608,8 +599,8 @@ body {
         -webkit-transform: scale(0.5);
     }
     100% {
-        opacity: 1;       
-        -webkit-transform: scale(1.2); 
+        opacity: 1;
+        -webkit-transform: scale(1.2);
     }
 }
 
@@ -629,7 +620,7 @@ body {
     margin-top: -0.5em;
     width: 100%;
 
-    font-family: Frances, serif;
+    font-family: serif;
     color: #000;
     text-shadow: 0.03em 0.03em 0.03em #fff,
                  -0.03em -0.03em 0.03em #fff,
@@ -657,8 +648,8 @@ body {
         -webkit-transform: scale(1.5);
     }
     100% {
-        opacity: 0;       
-        -webkit-transform: scale(0.9); 
+        opacity: 0;
+        -webkit-transform: scale(0.9);
     }
 }
 
@@ -698,7 +689,7 @@ body {
 }
 
 #main-menu h2 {
-    font-family: Frances, serif;
+    font-family: serif;
     font-size: 28px;
     font-weight: normal;
     color: white;
@@ -718,7 +709,7 @@ ul.menu li {
 }
 
 ul.menu li button{
-    font-family: Frances, serif;
+    font-family: serif;
     font-size: 21px;
     color: #000;
     width: 250px;
@@ -773,7 +764,7 @@ ul.menu li button:active {
 }
 
 th, td, #game-over label span, .stat-base-game-time, .stat-base-game-winner, .stat-base-game-id, .stat-base-first-player {
-    font-family: Frances, serif;
+    font-family: serif;
     font-size: 22px;
     z-index: 0;
 }

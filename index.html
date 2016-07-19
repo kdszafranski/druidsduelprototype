@@ -1,0 +1,247 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>A Druid's Duel</title>
+    
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet"
+        href="styles/mobile.css"
+        media="screen and (max-device-width: 768px)
+                    and (orientation: portrait),
+               screen and (max-device-width: 1024px)
+                    and (orientation: landscape)"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    
+    <script type="text/javascript" src="scripts/modernizr.js"></script>
+    <script type="text/javascript" src="scripts/loader.js"></script>
+</head>
+<body>
+    <div id="game">
+        <!-- <div class="background"></div> -->
+        <div id="splash-screen" class="screen">
+            <div class="progress">
+                <div class="indicator"></div>
+            </div>
+            <span class="continue">Click to Continue</span>
+        </div>
+        
+        <div id="main-menu" class="screen">
+            <!-- <h1 class="logo">A Druid's Duel</h1> -->
+            <h2>2 Players</h2>
+            <ul class="menu">
+                <li><button name="game-screen" value="2_player_playtest">Ill Temptations</button></li>
+                <li><button name="game-screen" value="2_player_open">Little Islands</button></li>
+                <li><button name="game-screen" value="corners">Four Corners</button></li>
+            </ul>
+            
+            <h2>3 Players</h2>
+            <ul class="menu">
+                <li><button name="game-screen" value="3_player_playtest">By A Thread</button></li>
+                <li><button name="game-screen" value="3_player_open">River Of Air</button></li>
+                <li><button name="game-screen" value="3_player_gaps">Windy Ways</button></li>
+            </ul>
+            
+            <h2>4 Players</h2>
+            <ul class="menu">
+                <li><button name="game-screen" value="4_player_split">Continental Drift</button></li>
+                <li><button name="game-screen" value="4_player_circle">What Comes Around</button></li>
+                <li><button name="game-screen" value="4_player_open">Waywalker Ranch</button></li>
+                <li><button name="game-screen" value="mindthegaps">Mind The Gaps</button></li>
+                <li><button name="game-screen" value="4_player_cross">Crossing Havok</button></li>
+            </ul>
+            
+            <h2>Testing Maps</h2>
+            <ul class="menu">
+                <li><button name="game-screen" value="playground">The Playground</button></li>
+                <li><button name="game-screen" value="gameovertest">Game Over Test</button></li>
+            </ul>
+            
+        </div>
+        
+        <div id="game-screen" class="screen">
+            <div class="game-board">
+                <div class="announcement"></div>
+                <div id="mana-jar">
+                    <div class="player-mana"><span></span></div>
+                </div>
+                <label class="help-text"><span>Help Text</span></label>
+                <label class="tile-occupant-moves"><span>Moves</span></label>
+                <button class="end-turn" name="end-turn"></button>
+                <button class="restart-turn" name="restart-turn"></button>
+                <button class="add-bridge" name="add-bridge"></button>              
+                <button class="add-soldier" name="add-soldier"></button>
+                <button class="add-archer" name="add-archer"></button>
+                <button class="add-knight" name="add-knight"></button>
+                <button class="add-walker" name="add-walker"></button>
+                <button class="add-wolf" name="add-wolf"></button>
+                <button class="add-eagle" name="add-eagle"></button>
+                <button class="add-bear" name="add-bear"></button>
+                <button class="add-turtle" name="add-turtle"></button>
+                <button class="add-land" name="add-land"></button>
+                <button class="add-obstacle" name="add-obstacle"></button>
+                <button class="land-steal" name="land-steal"></button>
+            </div>
+            
+            <div id="testing-info">
+                <h2>Testing Info</h2>
+                <div class="game-info location-info">
+                    <h3>Selected Location</h3>
+                    <ul>
+                        <li><label class="tile-coords">Coords: <span></span></label></li>
+                        <li><label class="tile-type">Tile Type: <span></span></label></li>
+                        <li><label class="tile-owner">Tile Owner: <span></span></label></li>
+                        <li><label class="tile-is-traversable">Traversable: <span></span></label></li>
+                        <li><label class="tile-has-relic">Relic: <span></span></label></li>
+                        <li><label class="tile-occupant">Occupied By: <span></span></label></li>
+                    </ul>
+                </div>
+                <div class="game-info">
+                    <h3>Game State Variables</h3>
+                    <textarea class="gameState-info" cols="45" rows="15"></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <!-- this is for the game screen but hacked to be alongside at all times -->
+        <div id="game-status">
+            <div class="music">
+                <audio id="musicplayer" src="sounds/summer_theme.mp3" controls loop />
+            </div>
+            
+            <h3>Game Information</h3>
+            <ul>
+                <li><label class="map-title">Map: <span></span></label></li>
+                <li><label class="current-player">Turn: <span></span></label></li>
+                <li><label class="game-turn">Round: <span></span></label></li>
+            </ul>
+            
+            <h3>Defeat Bonus</h3>
+            <ol class="defeat">
+                <li><label class="defeat-blue"><span>0</span></label></li>
+                <li><label class="defeat-yellow"><span>0</span></label></li>
+                <li><label class="defeat-red"><span>0</span></label></li>
+                <li><label class="defeat-black"><span>0</span></label></li>
+            </ol>                
+            
+            <h3>Game Settings</h3>
+            <ul>
+                <li><label class="tile-mana-value">Tile Mana Value: <span></span></label></li>
+                <li><label class="relic-value">Relic Bonus: <span></span></label></li>
+                <li><label class="soldier-move">Guardian/Wolf Move: <span></span></label></li>
+                <li><label class="archer-range">Hunter/Eagle Range: <span></span></label></li>
+                <li><label class="knight-move">Warrior/Bear Move: <span></span></label></li>
+                <li><label class="walker-move">Waywalker Move/Actions: <span></span></label></li>
+                <li><label class="walker-shoot">Waywalker Spell Range: <span></span></label></li>
+                <!-- <li><label class="animal-cost">Animal Cost: <span>10</span></label></li> -->
+                <!-- <li><label class="land-cost">Land/Obstacle Cost: <span>2</span></label></li> -->
+                <!-- <li><label class="min-mana-value">Minimum Mana: <span></span></label></li> -->                
+            </ul>
+
+            <div id="new-game-form">
+                <select name="mapName">
+                    <optgroup label="2 Players">
+                        <option value="2_player_playtest">Ill Temptations</option>
+                        <option value="2_player_open">Little Islands</option>
+                        <option value="corners">Four Corners</option>
+                    </optgroup>
+                    <optgroup label="3 Players">
+                        <option value="3_player_playtest">By A Thread</option>
+                        <option value="3_player_open">River Of Air</option>
+                        <option value="3_player_gaps">Windy Ways</option>
+                    </optgroup>
+                    <optgroup label="4 Players">
+                        <option value="4_player_split">Continental Drift</option>
+                        <option value="4_player_circle">What Comes Around</option>
+                        <option value="4_player_open">Waywalker Ranch</option>
+                        <option value="mindthegaps">Mind The Gaps</option>
+                        <option value="4_player_cross">Crossing Havok</option>
+                    </optgroup>
+                    <optgroup label="Testing Maps">
+                        <option value="playground" selected="selected">The Playground</option>
+                        <option value="gameovertest" selected="selected">Game Over Test</option>
+                    </optgroup>
+                </select>
+                <button class="start-game" name="start-game">Start New Game!</button>
+            </div>
+            
+            <div class="time"><div class="indiator"></div></div>
+        </div>
+        
+        <div id="game-over" class="screen">
+            <!-- <h1 class="logo">A Druid's Duel</h1> -->
+            <h3>Game Summary</h3>
+            <label class="stat-base-game-id">Game ID: <span></span></label>
+            <label class="stat-base-game-winner">Winner: <span></span></label>
+            <label class="stat-base-first-player">First Player: <span></span></label>
+            <label class="stat-base-game-time">Elapsed Time: <span></span></label>
+            <table>
+                <tr>
+                    <th></th>
+                    <th><span class="blue">Blue</span></th>
+                    <th><span class="yellow">Yellow</span></th>
+                    <th><span class="red">Red</span></th>
+                    <th><span class="black">Black</span></th>
+                </tr>
+                <tr>
+                    <td class="stat-label">Turns Played</td>
+                    <td><label class="stat-turns"><span class="blue"></span></label></td>
+                    <td><label class="stat-turns"><span class="yellow"></span></label></td>
+                    <td><label class="stat-turns"><span class="red"></span></label></td>
+                    <td><label class="stat-turns"><span class="black"></span></label></td>
+                </tr>
+                <tr>
+                    <td class="stat-label">Mana Generated</td>
+                    <td><label class="stat-mana-gen"><span class="blue"></span></label></td>
+                    <td><label class="stat-mana-gen"><span class="yellow"></span></label></td>
+                    <td><label class="stat-mana-gen"><span class="red"></span></label></td>
+                    <td><label class="stat-mana-gen"><span class="black"></span></label></td>
+                </tr>
+                <tr>
+                    <td class="stat-label">Mana Spent</td>
+                    <td><label class="stat-mana-spent"><span class="blue"></span></label></td>
+                    <td><label class="stat-mana-spent"><span class="yellow"></span></label></td>
+                    <td><label class="stat-mana-spent"><span class="red"></span></label></td>
+                    <td><label class="stat-mana-spent"><span class="black"></span></label></td>
+                </tr>
+                <tr>
+                    <td class="stat-label">Unspent Mana</td>
+                    <td><label class="stat-mana-delta"><span class="blue"></span></label></td>
+                    <td><label class="stat-mana-delta"><span class="yellow"></span></label></td>
+                    <td><label class="stat-mana-delta"><span class="red"></span></label></td>
+                    <td><label class="stat-mana-delta"><span class="black"></span></label></td>
+                </tr>
+                <tr>
+                    <td class="stat-label">New Units Placed</td>
+                    <td><label class="stat-units-placed"><span class="blue"></span></label></td>
+                    <td><label class="stat-units-placed"><span class="yellow"></span></label></td>
+                    <td><label class="stat-units-placed"><span class="red"></span></label></td>
+                    <td><label class="stat-units-placed"><span class="black"></span></label></td>
+                </tr>
+                <tr>
+                    <td class="stat-label">Units Captured</td>
+                    <td><label class="stat-units-captured"><span class="blue"></span></label></td>
+                    <td><label class="stat-units-captured"><span class="yellow"></span></label></td>
+                    <td><label class="stat-units-captured"><span class="red"></span></label></td>
+                    <td><label class="stat-units-captured"><span class="black"></span></label></td>
+                </tr>
+                <tr>
+                    <td class="stat-label">Animal Transforms</td>
+                    <td><label class="stat-units-upgraded"><span class="blue"></span></label></td>
+                    <td><label class="stat-units-upgraded"><span class="yellow"></span></label></td>
+                    <td><label class="stat-units-upgraded"><span class="red"></span></label></td>
+                    <td><label class="stat-units-upgraded"><span class="black"></span></label></td>
+                </tr>                       
+            </table>
+            <footer>
+                <button name="main-menu">Return to Main Menu</button>
+            </footer>
+        </div>
+        
+        <div id="tile-proto" class="jewel-size"></div>
+        <div id="version"><label class="version-number">A Druid's Duel Prototype v<span></span></label></div>
+    </div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # A Druid's Duel Prototype
 
-This code represents the complete JavaScript-based prototype of the turn-based strategy game A Druid's Duel. It implements all game rules and allows up to four players to play a complete game on the same machine.
+This code represents the complete JavaScript-based (web browser) prototype of the turn-based strategy game [A Druid's Duel](http://druidsduel.com). It implements all game rules and allows up to four players to play a complete game on the same browser.
 
 # Project Status
 

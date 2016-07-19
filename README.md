@@ -8,11 +8,11 @@ The codebase was completed in August 2013 and does not currently run due to mode
 
 # Credits
 
-All programming and artwork by Kris Szafranski. The basic architecture is based on code from Jacob Seidelin's book, HTML5 Games: Creating Fun with HTML5, CSS3, and WebGL.
+All game design, programming, and artwork by [Kris Szafranski](https://github.com/kdszafranski). The basic architecture is based on code from Jacob Seidelin's book, HTML5 Games: Creating Fun with HTML5, CSS3, and WebGL.
 
-SFX contain some copyrighted material though it has been altered.
+Some sound effects are based on copyrighted material though the files have been modified from the originals.
 
-The music was composed by Troy Strand and reflects the final original score.
+The music was composed by [Troy Strand](http://www.yellowchordaudio.com/) and reflects the final original score.
 
 # License
 
@@ -20,7 +20,8 @@ All original code (not including libraries) and documentation provided under the
 
 # The Code
 
-The game is implemented in JavaScript and uses the Sizzle, jQuery, and Modernizr libraries. The code is based on the underlying loading and board/input engine described in Jacob Seidelin's book: HTML5 Games: Creating Fun with HTML5, CSS3, and WebGL (http://www.wiley.com/WileyCDA/WileyTitle/productCd-1119975085.html)
+The game is implemented in JavaScript and uses the Sizzle, jQuery, and Modernizr libraries. The code is based on the underlying loading and board/input engine described in [Jacob Seidelin's book: HTML5 Games: Creating Fun with HTML5, CSS3, and WebGL](http://www.wiley.com/WileyCDA/WileyTitle/productCd-1119975085.html)
+
 
 ## Scripts
 

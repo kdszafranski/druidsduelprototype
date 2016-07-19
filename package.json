@@ -1,0 +1,29 @@
+{
+  "name": "druidsduelprototype",
+  "version": "1.0.0",
+  "description": "This code represents the complete JavaScript-based (web browser) prototype of the turn-based strategy game [A Druid's Duel](http://druidsduel.com). It implements all game rules and allows up to four players to play a complete game on the same browser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kdszafranski/druidsduelprototype.git"
+  },
+  "keywords": [
+    "game",
+    "javascript",
+    "turn-based"
+  ],
+  "author": "Kris Szafranski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kdszafranski/druidsduelprototype/issues"
+  },
+  "homepage": "https://github.com/kdszafranski/druidsduelprototype#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}

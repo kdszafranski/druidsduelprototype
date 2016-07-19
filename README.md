@@ -4,7 +4,7 @@ This code represents the complete JavaScript-based (web browser) prototype of th
 
 # Project Status
 
-The codebase was completed in August 2013. It has been changed only to load from a basic Node.js server so maps can be served statically instead of directly from the file system.
+The codebase was completed in August 2013. It has been changed only to load from a basic Node.js server so maps can be served statically instead of directly from the local file system.
 
 # Credits
 
@@ -17,6 +17,12 @@ The music was composed by [Troy Strand](http://www.yellowchordaudio.com/) and re
 # License
 
 All original code (not including libraries) and documentation provided under the MIT License.
+
+# Setup
+
+After cloning the repo, you'll need to get the Node server up and running. Do so by running `npm install`. This will set up the node static file server.
+
+In a browser, to to URL: `localhost:5000`
 
 # The Code
 

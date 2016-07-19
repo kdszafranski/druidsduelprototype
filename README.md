@@ -4,7 +4,7 @@ This code represents the complete JavaScript-based (web browser) prototype of th
 
 # Project Status
 
-The codebase was completed in August 2013 and does not currently run due to modern cross-origin script limitations. It contains only client-side code and the map files are loaded synchronously from the file system. The entire game was meant to be run locally only. This issue (and possibly others) need to be resolved before the game will run.
+The codebase was completed in August 2013. It has been changed only to load from a basic Node.js server so maps can be served statically instead of directly from the file system.
 
 # Credits
 

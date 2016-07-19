@@ -23,34 +23,34 @@ druid.board = (function() {
         rows = settings.rows;
         mapProperties = {};
         tiles = [];
-        obstcales = [];        
+        obstcales = [];
         if(requestedMap != undefined) {
-            loadMapFromJSON(requestedMap);            
+            loadMapFromJSON(requestedMap);
         } else {
             loadMapFromJSON(null);
         }
-        
+
         callback();
     }
-    
+
     // TODO: Would need a lot of error-checking to accept user-generated maps
     function loadMapFromJSON(requestedMap) {
-        
+
         if(requestedMap == null || requestedMap == undefined) {
             // nothing passed in, or it's broken, so use a map we know and trust
             requestedMap = "2_player_playtest";
         }
         mapFile = requestedMap;
-        
+
         $.ajax({
         	url: "maps/" + mapFile + ".json",
-        	method: 'get',
+        	method: 'GET',
         	dataType: 'json',
 
         	// MUST load synchronous, as the engine would otherwise determine that it
         	// can't resolve dependencies because the ajax request hasn't finished yet.
         	// FIXME FFS!
-        	async: false, 
+        	async: false,
         	success: function(data) {
         	    // get map info
                 props = data.properties;
@@ -61,16 +61,16 @@ druid.board = (function() {
                     tileManaValue: props.tileManaValue,
                     relicValue: props.relicValue
                 };
-        	    
+
         	    settings.numPlayers = mapProperties.players;
-        	    
+
         	    var thisTile;
-        	    
+
         	    // load ground tiles
         	    tileArray = data.layers[0].data;
                 tileArray.reverse(); // changes them to draw order
                 ownerArray = data.layers[1].data;
-                
+
                 tiles = [];
                 ownerIndex = 0;
 
@@ -91,19 +91,19 @@ druid.board = (function() {
                 obstaclesArray = data.layers[2].data;
                 obstaclesArray.reverse();
                 obstacles = [];
-                
+
                 for(i = 0; i < rows; i++) {
                     obstacles[i] = [];
                     for(j = 0; j < longCols; j++) {
                         obstacles[i][j] = obstaclesArray.pop();
                     }
                 }
-                
+
                 // load units
                 unitsArray = data.layers[3].data;
                 unitsArray.reverse();
                 units = [];
-                
+
                 for(i = 0; i < rows; i++) {
                     units[i] = [];
                     for(j = 0; j < longCols; j++) {
@@ -127,44 +127,44 @@ druid.board = (function() {
                 }
         	},
         	error: function( xhr, status, error ){
-        		throw( 
+        		throw(
         			"Failed to load map via ajax " + error + "\n" +
         			xhr.responseText
         		);
         	}
         });
     }
-    
+
     // finds clumps of land spaces and adds flowers to the tiles
     function generateFlowers() {
         var chance = .50;
-        
+
         for(x = 0; x < tiles.length; x++) {
             tileRow = tiles[x];
             for(y = 0; y < tileRow.length; y++) {
                 thisTile = tileRow[y];
-                
-            }      
+
+            }
         }
-        
+
     }
-    
+
     // TODO: following setters are very dangerous
     function setBoard(newTiles) {
         tiles = [];
         tiles = newTiles;
     }
-    
+
     function setObstacles(newObstacles) {
         obstacles = [];
         obstacles = newObstacles;
     }
-    
+
     function setUnits(newUnits) {
         units = [];
         units = newUnits;
     }
-    
+
     // create a copy of the game board tiles only
     function getBoard() {
         var copy = [];
@@ -174,7 +174,7 @@ druid.board = (function() {
         }
         return copy;
     }
-    
+
     function getObstacles() {
         var copy = [];
         var x;
@@ -183,7 +183,7 @@ druid.board = (function() {
         }
         return copy;
     }
-    
+
     function getUnits() {
         var copy = [];
         var x;
@@ -192,7 +192,7 @@ druid.board = (function() {
         }
         return copy;
     }
-    
+
     // get the tile object from a given location
     function getTile(x, y) {
         if(outOfBounds(x, y)) {
@@ -201,8 +201,8 @@ druid.board = (function() {
             return tiles[y][x];
         }
     }
-    
-    function getTileType(x, y) {        
+
+    function getTileType(x, y) {
         if(outOfBounds(x, y)) {
             return -1;
         } else {
@@ -210,10 +210,10 @@ druid.board = (function() {
             return thisTile.type;
         }
     }
-    
+
     function getTileOwner(x, y) {
         var thisTile;
-        
+
         // check boundaries
         if(outOfBounds(x, y)) {
             return -1;
@@ -222,7 +222,7 @@ druid.board = (function() {
             return thisTile.owner;
         }
     }
-    
+
     function getObstacle(x, y) {
         // check boundaries
         if(outOfBounds(x, y)) {
@@ -231,7 +231,7 @@ druid.board = (function() {
             return obstacles[y][x];
         }
     }
-    
+
     function getUnit(x, y) {
         // check boundaries
         if(outOfBounds(x, y)) {
@@ -240,7 +240,7 @@ druid.board = (function() {
             return units[y][x];
         }
     }
-    
+
     // owner = owner code
     // x and y is a board location
     function setTileOwner(x, y, owner) {
@@ -252,7 +252,7 @@ druid.board = (function() {
             tiles[y][x] = thisTile;
         }
     }
-    
+
     function outOfBounds(x, y) {
         if(x === undefined || y === undefined) {
             return true;
@@ -265,7 +265,7 @@ druid.board = (function() {
             }
         }
     }
-    
+
     function isTraversable(x, y) {
         if(outOfBounds(x, y)) {
             return false;
@@ -279,7 +279,7 @@ druid.board = (function() {
             }
         }
     }
-    
+
     function hasRelic(x, y) {
         if(outOfBounds(x, y)) {
             return false;
@@ -291,7 +291,7 @@ druid.board = (function() {
             }
         }
     }
-    
+
     function isOccupied(x, y) {
         if(outOfBounds(x, y)) {
             return false;
@@ -304,8 +304,8 @@ druid.board = (function() {
             }
         }
     }
-    
-    function getLocationInformation(x, y) {        
+
+    function getLocationInformation(x, y) {
         if(outOfBounds(x, y)) {
             return -1;
         } else {
@@ -328,10 +328,10 @@ druid.board = (function() {
             return tileInformation;
         }
     }
-    
+
     // Manages which unit is selected.
     // In invocation, compares all units to x and y, deselecting all but x, y.
-    function selectUnit(x, y) {        
+    function selectUnit(x, y) {
         for(var i = 0; i < units.length; i++) {
             unitRow = units[i];
             for(var j = 0; j < unitRow.length; j++) {
@@ -346,16 +346,16 @@ druid.board = (function() {
         }
         return getUnit(x, y);
     }
-    
+
     function moveUnit(fromX, fromY, owner, moveData) {
         var moveUnit = {},
             oldTile = {},
             moveTile = {};
-        
+
         if(moveData) {
             // get current unit
             moveUnit = getUnit(fromX, fromY);
-            
+
             // update with new data. be sure to check actions remaining.
             moveUnit.enabled = false;
             if(moveUnit.actions - 1 > 0) {
@@ -364,9 +364,9 @@ druid.board = (function() {
                 moveUnit.enabled = false;
             }
             moveUnit.actions--;
-            
+
             units[moveData.y][moveData.x] = moveUnit;
-            
+
             // wipe old unit
             oldUnit = {
                 type: 0,
@@ -378,26 +378,26 @@ druid.board = (function() {
                 actions: 0
             };
             units[fromY][fromX] = oldUnit;
-            
+
             // set owner of new tile unless it's a bridge
             newTile = getTile(moveData.x, moveData.y);
             if(newTile.type < 3) {
                 setTileOwner(moveData.x, moveData.y, owner);
-            } 
-            
+            }
+
             return moveUnit.actions;
         } else {
             return -1;
         }
     }
-    
+
     function attackUnit(fromX, fromY, owner, moveData) {
         var attackUnit;
-        
+
         if(moveUnit(fromX, fromY, owner, moveData) > -1) {
             attackUnit = getUnit(moveData.x, moveData.y);
             attackUnit.captures++;
-            if(settings.attackEndsTurn) {                
+            if(settings.attackEndsTurn) {
                 if(util.getUnitNameFromType(attackUnit.type) != "bear") {
                     attackUnit.enabled = false;
                     attackUnit.actions = 0;
@@ -409,10 +409,10 @@ druid.board = (function() {
             return -1;
         }
     }
-    
+
     function flyUnit(fromX, fromY, owner, moveData) {
         var flyingUnit;
-        
+
         if(moveUnit(fromX, fromY, owner, moveData)) {
             flyingUnit = getUnit(moveData.x, moveData.y);
             flyingUnit.captures++;
@@ -428,7 +428,7 @@ druid.board = (function() {
             return -1;
         }
     }
-    
+
     function shootUnit(fromX, fromY, owner, shootData) {
         var shootUnit = {};
         if(shootData) {
@@ -456,23 +456,23 @@ druid.board = (function() {
                 shootUnit.enabled = false;
             }
             shootUnit.actions--;
-            
+
             units[fromY][fromX] = shootUnit;
-            
+
             return true;
         } else {
             return false;
         }
-        
+
     }
-    
+
     function captureRelic(fromX, fromY, owner, moveData) {
         if(moveData) {
             thisTile = getTile(moveData.x, moveData.y);
             thisTile.owner = owner;
-            
+
             obstacles[moveData.y][moveData.x] = util.getRelicTypeForOwner(owner);
-            
+
             if(settings.captureRelicEndsTurn) {
                 capturingUnit = getUnit(fromX, fromY);
                 capturingUnit.enabled = false;
@@ -488,7 +488,7 @@ druid.board = (function() {
             return false;
         }
     }
-    
+
     function getCurrentPlayerTileCount(owner) {
         var tileCount = {
             groundTiles: 0,
@@ -498,23 +498,23 @@ druid.board = (function() {
             tileRow = tiles[x];
             for(y = 0; y < tileRow.length; y++) {
                 thisTile = tileRow[y];
-                
-                if(thisTile.owner == owner) {                    
+
+                if(thisTile.owner == owner) {
                     if(hasRelic(y, x)) {
                         tileCount.relics++;
                     } else {
                         tileCount.groundTiles++;
                     }
                 }
-            }      
+            }
         }
         return tileCount;
     }
-    
+
     // returns location information for all spaces owned by owner (player)
     function getAllSpacesForPlayer(owner) {
         var spaces = [], tileRow, thisTile;
-            
+
         for(x = 0; x < tiles.length; x++) {
             tileRow = tiles[x];
             for(y = 0; y < tileRow.length; y++) {
@@ -523,15 +523,15 @@ druid.board = (function() {
                 if(thisTile.owner == owner) {
                     spaces.push(possibleSpace);
                 }
-            }      
+            }
         }
         return spaces;
     }
-    
+
     function getPlayerUnitCountForType(owner, typeName) {
         var unitCount = 0;
         var spaces = getAllSpacesForPlayer(owner);
-        
+
         for(i = 0; i < spaces.length; i++) {
             if(spaces[i].tileOccupant == typeName) {
                 unitCount++;
@@ -539,11 +539,11 @@ druid.board = (function() {
         }
         return unitCount;
     }
-    
+
     // returns all open land spaces for determining possible bridge locations
     function getAllOpenSpaces() {
         var spaces = [], tileRow, thisTile;
-            
+
         for(x = 0; x < tiles.length; x++) {
             tileRow = tiles[x];
             for(y = 0; y < tileRow.length; y++) {
@@ -552,14 +552,14 @@ druid.board = (function() {
                 if(thisTile.type == 0) {
                     spaces.push(possibleSpace);
                 }
-            }      
+            }
         }
         return spaces;
     }
-    
+
     function enablePlayerUnits(owner, callback) {
         unitCodes = util.getPlayerUnitTypes(owner);
-        
+
         for(var x = 0; x < units.length; x++) {
             unitRow = units[x];
             for(var y = 0; y < unitRow.length; y++) {
@@ -572,7 +572,7 @@ druid.board = (function() {
                         thisUnit.formerType = null;
                         thisUnit.upgraded = false;
                         thisUnit.typeName = util.getUnitNameFromType(thisUnit.type);
-                        thisUnit.upgradeIsPersistent = false;   
+                        thisUnit.upgradeIsPersistent = false;
                     }
                     thisUnit.enabled = true;
                     thisUnit.selected = false;
@@ -591,31 +591,31 @@ druid.board = (function() {
                     }
                 }
                 unitRow[y] = thisUnit;
-            }      
+            }
         }
 
-        callback();        
+        callback();
     }
-    
+
     function addBridge(x, y, callback) {
-        bridge = determineBridgeType(x, y);        
+        bridge = determineBridgeType(x, y);
         tiles[y][x] = {
             type: bridge,
             owner: 0
         };
-        
+
         callback();
     }
-    
+
     function alterLand(fromX, fromY, owner, moveData) {
         var thisTile, castingUnit, type;
         var castingUnit = {},
             targetTile = {};
-        
+
         if(moveData) {
             // get current unit
             castingUnit = getUnit(fromX, fromY);
-            
+
             // update with new data. be sure to check actions remaining.
             if(castingUnit.actions - 1 > 0) {
                 castingUnit.enabled = true;
@@ -624,7 +624,7 @@ druid.board = (function() {
             }
             castingUnit.actions--;
             units[fromY][fromX] = castingUnit;
-            
+
             thisTile = getTile(moveData.x,moveData.y);
             if(thisTile.type == 0) {
                 // add land
@@ -643,7 +643,7 @@ druid.board = (function() {
                     type: 0,
                     owner: 0
                 };
-                
+
                 // wipe unit who's here
                 units[moveData.y][moveData.x] = {
                     type: 0,
@@ -654,27 +654,27 @@ druid.board = (function() {
                     captures: 0,
                     actions: 0
                 };
-                
+
                 // remove obstacle
                 obstacles[moveData.y][moveData.x] = 0;
             }
-            
+
             return castingUnit.actions;
         } else {
             return -1;
         }
     }
-    
+
     function alterObstacle(fromX, fromY, owner, moveData) {
         var thisObst, castingUnit, type, thisTile;
-        
+
         var castingUnit = {},
             targetTile = {};
-        
+
         if(moveData) {
             // get current unit
             castingUnit = getUnit(fromX, fromY);
-            
+
             // update with new data. be sure to check actions remaining.
             if(castingUnit.actions - 1 > 0) {
                 castingUnit.enabled = true;
@@ -682,9 +682,9 @@ druid.board = (function() {
                 castingUnit.enabled = false;
             }
             castingUnit.actions--;
-            
+
             units[fromY][fromX] = castingUnit;
-            
+
             thisObst = getObstacle(moveData.x,moveData.y);
             if(thisObst == 0) {
                 // add obstacle
@@ -696,45 +696,45 @@ druid.board = (function() {
                 // remove obstacle
                 obstacles[moveData.y][moveData.x] = 0;
             }
-            
+
             return castingUnit.actions;
         } else {
             return -1;
         }
     }
-    
+
     function stealLand(fromX, fromY, owner, moveData) {
         var castingUnit, type, thisTile;
-        
+
         var castingUnit = {},
             targetTile = {};
-        
+
         if(moveData) {
             // get current unit
             castingUnit = getUnit(fromX, fromY);
-            
+
             // update with new data. be sure to check actions remaining.
             if(castingUnit.actions - 1 > 0) {
                 castingUnit.enabled = true;
             } else {
                 castingUnit.enabled = false;
             }
-            castingUnit.actions--;            
+            castingUnit.actions--;
             units[fromY][fromX] = castingUnit;
-            
+
             // change land owner
             setTileOwner(moveData.x, moveData.y, owner);
-            
+
             return castingUnit.actions;
         } else {
             return -1;
         }
     }
-    
+
     function addUnit(x, y, playerNumber, typeName, callback) {
         newOwner = util.getOwnerNumberFromPlayer(playerNumber);
         unitType = util.getUnitTypeFromName(playerNumber, typeName);
-        
+
         var newUnit = {
             type: unitType,
             enabled: false,
@@ -747,22 +747,22 @@ druid.board = (function() {
             captures: 0,
             actions: 0
         };
-        
+
         units[y][x] = newUnit;
         if( setTileOwner(x, y, newOwner) == -1) {
             console.log("here");
         }
-        
+
         callback();
     }
-    
+
     // changes the unit from one type to another, as in animal form upgrades
     function changeUnit(x, y, owner, playerNumber, typeName, upgraded, enabled) {
         theUnit = getUnit(x, y);
         theUnit.formerType = theUnit.type;
         theUnit.type = util.getUnitTypeFromName(playerNumber, typeName);
         theUnit.actions = util.getUnitMoves(theUnit.type);
-        
+
         theUnit.upgraded = upgraded;
         theUnit.upgradedThisTurn = true;
         theUnit.typeName = util.getUnitNameFromType(theUnit.type);
@@ -773,10 +773,10 @@ druid.board = (function() {
         if(typeName == "turtle") {
             theUnit.upgradeIsPersistent = true;
         }
-        
+
         return true;
     }
-    
+
     // Undoes previous changeUnit function on this unit
     function changeUnitBack(x, y) {
         theUnit = getUnit(x, y);
@@ -785,19 +785,19 @@ druid.board = (function() {
         theUnit.upgraded = false;
         theUnit.typeName = util.getUnitNameFromType(theUnit.type);
         theUnit.upgradeIsPersistent = false;
-        
+
         return true;
     }
-    
+
     // Attempts to draw the best bridge type to visually match the surrounding tiles
     function determineBridgeType(x, y) {
-        spaces = getAdjacentLocations(x, y);        
+        spaces = getAdjacentLocations(x, y);
         NE = (spaces[1].tileType == undefined) ? 0 : spaces[1].tileType;
         SE = (spaces[3].tileType == undefined) ? 0 : spaces[3].tileType;
         SW = (spaces[5].tileType == undefined) ? 0 : spaces[5].tileType;
         NW = (spaces[7].tileType == undefined) ? 0 : spaces[7].tileType;
         type = 4;
-        
+
         if(NW > 0 && NE == 0 && SW == 0) {
             type = 3;
         }
@@ -816,11 +816,11 @@ druid.board = (function() {
         } else if ((NE > 0 || NE == 0) && (SE > 0) && (SW > 0 || SW == 0) || (NW > 0)) {
             type = 4;
         }
-        
+
         return type;
-        
+
     }
-    
+
     // returns an array of tileinfo objects of adjacent spaces to x, y
     function getAdjacentLocations(x, y) {
         var moves = [],
@@ -829,7 +829,7 @@ druid.board = (function() {
                 y : y
             },
             tileInfo;
-        
+
         if(target.y % 2 == 0) {
             // handle long row target
             if(tileInfo = getLocationInformation(target.x, target.y - 2)) {
@@ -909,20 +909,20 @@ druid.board = (function() {
             rangeMoves = [],
             count = 1,
             limit;
-            
+
         // set current spot as the center
         var currentLocation = {
                 x: x,
                 y: y
             };
-        
+
         while(count <= range) {
             // walk around each direction, expanding outward, gathering all x, y coords
             // REMEMBER! Each new currentLocation becomes the center, so we are only travelling diagonally
-            
+
             // Go N. That's the new center. Don't get that info, we'll get it last so we are set to go N again from there.
             currentLocation.y -= 2;
-            
+
             // Go SE to count * 2, which traverses down to and including the E spot from the starting location
             limit = count * 2;
             for(var se = 1; se <= limit; se++) {
@@ -938,9 +938,9 @@ druid.board = (function() {
                 } else {
                     moves.push(getLocationInformation(currentLocation.x, currentLocation.y));
                 }
-                
+
             }
-            
+
             // Now turn SW and go the same distance.
             for(var sw = 1; sw <= limit; sw++) {
                 if(currentLocation.y % 2 == 0) {
@@ -956,7 +956,7 @@ druid.board = (function() {
                     moves.push(getLocationInformation(currentLocation.x, currentLocation.y));
                 }
             }
-            
+
             // Now turn NW
             for(var nw = 1; nw <= limit; nw++) {
                 if(currentLocation.y % 2 == 0) {
@@ -972,7 +972,7 @@ druid.board = (function() {
                     moves.push(getLocationInformation(currentLocation.x, currentLocation.y));
                 }
             }
-            
+
             // Now turn NE, this is the home stretch, and ends with us back at straight N of the start.
             for(var ne = 1; ne <= limit; ne++) {
                 if(currentLocation.y % 2 == 0) {
@@ -991,49 +991,49 @@ druid.board = (function() {
             // increment that shit!
             count++;
         }
-        
+
         if(returnOnlyAtRange == true) {
             return rangeMoves;
         } else {
-            return moves;            
+            return moves;
         }
     }
-    
+
     // Returns a number from 1 - 4 which indicates the tile type
     // Note: this can return bridges
     function randomTile() {
         return Math.ceil(Math.random() * numTileTypes);
     }
-    
+
     function print() {
         var str = "\r\n";
         var tile, tileRow, thisTile;
-        
+
         for(var x = 0; x < tiles.length; x++) {
             tileRow = tiles[x];
             for(var y = 0; y < tileRow.length; y++) {
                 thisTile = tileRow[y];
                 str += thisTile.type + " ";
             }
-            str += "\r\n";            
+            str += "\r\n";
         }
-        
+
         return str;
     }
-    
+
     function getMapFile() {
         return mapFile;
     }
-    
+
     function getMapProperties() {
         return mapProperties;
     }
-    
+
     function getMapTitle() {
         return mapProperties.title;
     }
-    
-    
+
+
     return {
         initialize: initialize,
         print: print,
@@ -1075,6 +1075,6 @@ druid.board = (function() {
         setUnits: setUnits,
         stealLand: stealLand
     };
-    
-    
+
+
 })();

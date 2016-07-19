@@ -32,12 +32,19 @@ In a terminal:
 
 The game is implemented in JavaScript and uses the Sizzle, jQuery, and Modernizr libraries. The code is based on the underlying loading and board/input engine described in [Jacob Seidelin's book: HTML5 Games: Creating Fun with HTML5, CSS3, and WebGL](http://www.wiley.com/WileyCDA/WileyTitle/productCd-1119975085.html)
 
+Here's a breakdown of the files located in the server/public folder:
 
 ## Scripts
 
+Contains all of the JavaScript code to run the game. Entry point is in loader.js, which loads all of the files in order.
+
 ## Sounds
 
+All SFX and music files in MP3 and OGG formats.
+
 ## Images
+
+Contains GUI and game artwork sprites.
 
 ## Maps
 

@@ -2,6 +2,8 @@
 
 This code represents the complete JavaScript-based (web browser) prototype of the turn-based strategy game [A Druid's Duel](http://druidsduel.com). It implements all game rules and allows up to four players to play a complete game on the same browser.
 
+You see what it's like [by trying it out here](https://peaceful-island-82026.herokuapp.com/).
+
 # Project Status
 
 The codebase was completed in August 2013. It has been changed only to load from a basic Node.js server so maps can be served statically instead of directly from the local file system.

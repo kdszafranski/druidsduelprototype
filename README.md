@@ -34,7 +34,7 @@ In a terminal:
 
 A Druid's Duel is a turn-based strategy game where the objective is to be the only player to own any pieces of land. Each Druid unit can move and attack every turn, in any order you want. Collect land by moving your Druids over it. Land generates Mana on your turn. Use Mana to turn your Druids into their Animal forms, which give temporary movement and attack options.
 
-## The Code
+# The Code
 
 The game is implemented in JavaScript and uses the Sizzle, jQuery, and Modernizr libraries. The code is based on the underlying loading and board/input engine described in [Jacob Seidelin's book: HTML5 Games: Creating Fun with HTML5, CSS3, and WebGL](http://www.wiley.com/WileyCDA/WileyTitle/productCd-1119975085.html)
 
